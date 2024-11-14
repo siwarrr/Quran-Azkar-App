@@ -1,0 +1,46 @@
+.card {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-top: 20px;
+  }
+  
+  .verse-text {
+    position: relative;
+    display: inline-block;
+  }
+
+  .surah-content {
+    direction: rtl;
+    font-family: 'Amiri', serif; /* Utilisation d'une belle police arabe */
+    font-size: 1.4rem;
+    line-height: 2.2rem;
+  }
+  
+  .basmala {
+    margin-bottom: 15px;
+  }
+  
+  .verse-container {
+    margin-top: 20px;
+    background-color: rgb(247, 247, 229);
+    border-radius: 14px;
+  }
+  
+  .verse {
+    display: inline-block;
+    padding: 10px;
+    margin: 5px 0;
+  }
+  
+  .verse-number {
+    display: inline-block;
+    background: #f0f0f0;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+    font-size: 0.9rem;
+    margin-left: 10px;
+  }
+  

@@ -1,0 +1,32 @@
+<h2 class="text-center fs-3 fw-semibold">أذكار الصباح و المساء</h2>
+
+<!-- Liste des Azkars -->
+<div *ngIf="azkarList.length > 0; else noAzkar">
+  <ul class="list-group">
+    <li *ngFor="let azkar of azkarList" class="list-group-item">
+      <div class="d-flex justify-content-center">
+      <button class="btn btn-outline-dark" (click)="loadAzkarContent(azkar.TEXT, azkar.TITLE)"
+      *ngIf="selectedAzkarTitle !== azkar.TITLE">عرض الأذكار</button>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<!-- Contenu de l'Azkar sélectionné -->
+<div *ngIf="selectedAzkarContent && selectedAzkarContent.length > 0" class="azkar-container">
+  <div *ngFor="let content of selectedAzkarContent">
+    <div *ngIf="content.AUDIO" class="mt-3">
+      <button (click)="toggleAudio(content.ID)" class="btn btn-link text-info d-flex align-items-center">
+        <i [class.bi-play-circle]="!isAudioPlayingMap[content.ID]" [class.bi-pause-circle]="isAudioPlayingMap[content.ID]"></i>
+        <span class="ms-2">{{ isAudioPlayingMap[content.ID] ? 'Pause' : 'Lire' }}</span>
+      </button>
+    </div>
+    <p>{{ content.ARABIC_TEXT }}</p>
+    <hr>
+    <audio #audioPlayer [id]="'audio-' + content.ID" [src]="content.AUDIO" (ended)="onAudioEnded(content.ID)"></audio>
+  </div>
+</div>
+
+<ng-template #noAzkar>
+  <p>لا توجد أذكار للعرض حاليا.</p>
+</ng-template>

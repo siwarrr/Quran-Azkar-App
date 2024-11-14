@@ -1,0 +1,24 @@
+h1 {
+    font-family: 'Roboto', sans-serif;
+    cursor: pointer;
+}
+
+.nav-link {
+    font-family: 'Amiri', serif;
+    margin: 10px;
+}
+
+.quran-text {
+    font-family: 'Amiri Quran', serif;
+    font-size: 24px;
+    line-height: 1.8;
+    text-align: center;
+    direction: rtl; 
+    background: #f8f9fa; 
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    height: 100px;
+    margin-top: 100px;
+  }
+  

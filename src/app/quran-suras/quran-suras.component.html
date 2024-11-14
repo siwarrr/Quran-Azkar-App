@@ -1,0 +1,48 @@
+<div class="card mb-3">
+  <div class="card-header text-center">
+    <h2>القرآن الكريم</h2>
+  </div>
+
+  <!-- Liste des sourates -->
+  <div *ngFor="let sura of quranSuras" class="p-2 mb-2 border-bottom">
+    <h5 class="text-end">{{ sura.name }}</h5>
+    <p class="text-end">اياتها: {{ sura.numberOfAyahs }}</p>
+
+    <!-- Bouton pour afficher le contenu de la sourate -->
+    <div class="d-flex gap-2 justify-content-center">
+      <button (click)="loadSurahContent(sura.number)" class="btn btn-outline-primary bi bi-book"></button>
+      <button (click)="close(sura.number)" class="btn btn-outline-secondary bi bi-journal-check"></button>
+    </div>
+
+    <!-- Contenu de la sourate affiché dans un style spécifique -->
+    <div *ngIf="selectedSurah?.number === sura.number" class="mt-4 surah-content">
+      <div class="text-center mb-3">
+        <h3>{{ selectedSurah.name }}</h3>
+        <p><em>{{ selectedSurah.revelationType }}</em></p>
+        <div *ngIf="audioSrc && selectedSurah?.number === sura.number" class="mt-3">
+          <button (click)="toggleAudio()" class="btn btn-link text-info d-flex align-items-center">
+            <i [class.bi-play-circle]="!isAudioPlaying" [class.bi-pause-circle]="isAudioPlaying"></i>
+            <span class="ms-2">{{ isAudioPlaying ? 'Pause' : 'Lire' }}</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Affichage de Basmala si nécessaire -->
+      <div class="text-center basmala" *ngIf="selectedSurah.number !== 9 && filteredSurahVerses.length && filteredSurahVerses[0]?.text.trim() !== 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ'">
+        <p><strong>بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</strong></p>
+      </div>
+      
+      <!-- Liste des versets stylisés -->
+      <div class="verse-container">
+        <div *ngFor="let verse of filteredSurahVerses" class="verse text-center">
+          <span class="verse-number">({{ verse.numberInSurah }})</span> 
+          {{ verse.text }}
+        </div>
+      </div>      
+
+      <!-- Lecteur audio spécifique -->
+      <audio #audioPlayer [src]="audioSrc" (ended)="onAudioEnded()"></audio>
+
+    </div>
+  </div>
+</div>
