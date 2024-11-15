@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class AzkarService {
 
-  private arabicAzkarUrl = 'http://www.hisnmuslim.com/api/ar/husn_ar.json';
+  private arabicAzkarUrl = 'https://github.com/nawafalqari/ayah';
 
   constructor(private http: HttpClient) {}
 
