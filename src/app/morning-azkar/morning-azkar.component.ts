@@ -10,52 +10,47 @@ import { AzkarContent } from '../content';
 })
 export class MorningAzkarComponent implements OnInit{
 
-  azkarList: Azkar[] = []; // Liste principale des Azkars
-  selectedAzkarContent: AzkarContent[] = []; // Contenu détaillé de l'Azkar sélectionné
-  selectedAzkarTitle: string = '';
-  isAudioPlayingMap: { [key: number]: boolean } = {}; // Gère l'état de lecture par ID
-
-  @ViewChildren('audioPlayer') audioPlayers!: QueryList<ElementRef>;
+  morningAzkar: any[] = []; 
+  eveningAzkar: any[] = []; 
+  selectedAzkarContent: any[] = []; 
+  selectedAzkarTitle: string = ''; 
+  currentAudio: HTMLAudioElement | null = null;
+  currentAzkarContent: string | null = null;
+  isPlaying: boolean = false;
 
   constructor(private azkarService: AzkarService) {}
 
   ngOnInit(): void {
-    this.azkarService.getAzkarList().subscribe((data: { [key: string]: Azkar[] }) => {
-      this.azkarList = data['العربية'].filter((azkar: Azkar) => azkar.TITLE.includes('الصباح'));
+    this.azkarService.getAzkarList().subscribe(data => {
+      this.morningAzkar = data['أذكار الصباح'];
+      this.eveningAzkar = data['أذكار المساء'];
     });
   }
 
-  loadAzkarContent(url: string, title: string): void {
-    this.azkarService.getAzkarContent(url).subscribe((content: { [key: string]: AzkarContent[] }) => {
-      this.selectedAzkarContent = content['أذكار الصباح والمساء'];
-      this.selectedAzkarTitle = title;
-      this.isAudioPlayingMap = {}; // Réinitialise les états audio
-    });
+  loadAzkarContent(category: string): void {
+    this.selectedAzkarContent = category === 'morning' ? this.morningAzkar : this.eveningAzkar;
+    this.selectedAzkarTitle = category === 'morning' ? 'أذكار الصباح' : 'أذكار المساء';
   }
 
-  toggleAudio(id: number): void {
-    const audioElement = this.audioPlayers.find(player => player.nativeElement.id === `audio-${id}`)?.nativeElement;
-
-    if (audioElement) {
-      if (audioElement.paused) {
-        this.stopAllAudios(); // Arrête tous les autres audios
-        audioElement.play();
-        this.isAudioPlayingMap[id] = true;
-      } else {
-        audioElement.pause();
-        this.isAudioPlayingMap[id] = false;
-      }
+  toggleAudio(azkarContent: string): void {
+    if (this.isPlaying && this.currentAzkarContent === azkarContent) {
+      window.speechSynthesis.cancel(); // Stop reading
+      this.isPlaying = false;
+      this.currentAzkarContent = null;
+      return;
     }
+
+    this.currentAzkarContent = azkarContent;
+    this.isPlaying = true;
+
+    const utterance = new SpeechSynthesisUtterance(azkarContent);
+    utterance.lang = 'ar-SA'; // Assurez-vous que l'arabe est défini
+    utterance.onend = () => {
+      this.isPlaying = false;
+      this.currentAzkarContent = null;
+    };
+
+    window.speechSynthesis.speak(utterance);
   }
 
-  stopAllAudios(): void {
-    this.audioPlayers.forEach(player => {
-      player.nativeElement.pause();
-    });
-    this.isAudioPlayingMap = {}; // Réinitialise l'état
-  }
-
-  onAudioEnded(id: number): void {
-    this.isAudioPlayingMap[id] = false;
-  }
 }

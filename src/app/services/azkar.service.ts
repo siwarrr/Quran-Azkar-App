@@ -7,15 +7,11 @@ import { Observable } from 'rxjs';
 })
 export class AzkarService {
 
-  private arabicAzkarUrl = 'https://github.com/nawafalqari/ayah';
+  private azkarUrl = 'https://raw.githubusercontent.com/nawafalqari/ayah/main/src/data/adkar.json'; 
 
   constructor(private http: HttpClient) {}
 
   getAzkarList(): Observable<any> {
-    return this.http.get(this.arabicAzkarUrl); 
-  }
-
-  getAzkarContent(url: string): Observable<any> {
-    return this.http.get(url); 
+    return this.http.get(this.azkarUrl);
   }
 }
