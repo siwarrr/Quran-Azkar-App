@@ -12,7 +12,7 @@
 
 - **🎧 Lecture et Écoute du Coran :**  
   - Accès à toutes les sourates du Coran.  
-  - Possibilité d'écouter les sourates avec la voix magnifique de ###Mishary Rashid Alafasy.
+  - Possibilité d'écouter les sourates avec la voix magnifique de Mishary Rashid Alafasy.
 
 - **🕋 Azkar Matin & Soir :**  
   - Affichage complet des invocations du matin et du soir.  
