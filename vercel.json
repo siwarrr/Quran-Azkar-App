@@ -1,0 +1,9 @@
+{
+    "rewrites": [
+      {
+        "source": "/proxy/:path*",
+        "destination": "http://www.hisnmuslim.com/api/:path*"
+      }
+    ]
+  }
+  

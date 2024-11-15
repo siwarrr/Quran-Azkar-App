@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class AzkarService {
 
-  private arabicAzkarUrl = 'https://www.hisnmuslim.com/api/ar/husn_ar.json';
+  private arabicAzkarUrl = 'http://www.hisnmuslim.com/api/ar/husn_ar.json';
 
   constructor(private http: HttpClient) {}
 
@@ -16,6 +16,10 @@ export class AzkarService {
   }
 
   getAzkarContent(url: string): Observable<any> {
-    return this.http.get(url); 
+    // Récupère juste la dernière partie de l'URL et utilise le proxy
+    const endpoint = url.split('/').pop();
+    const proxyUrl = `https://<quran-azkar-app>.vercel.app/proxy/ar/${endpoint}`;
+    return this.http.get(proxyUrl);
   }
+  
 }
