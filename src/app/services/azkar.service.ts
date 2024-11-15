@@ -16,10 +16,6 @@ export class AzkarService {
   }
 
   getAzkarContent(url: string): Observable<any> {
-    // Récupère juste la dernière partie de l'URL et utilise le proxy
-    const endpoint = url.split('/').pop();
-    const proxyUrl = `https://<quran-azkar-app>.vercel.app/proxy/ar/${endpoint}`;
-    return this.http.get(proxyUrl);
+    return this.http.get(url); 
   }
-  
 }
